@@ -11,3 +11,57 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# by default, on the terminal is set to 
+# de_DE.UTF-8, which we do not want
+export LANG='en_US.UTF-8'
+
+
+# asdf is our version manager for runtimes like Python, Node, etc.
+
+source "$HOME/.asdf/asdf.sh"
+# append adsf completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# initialise completions with ZSH's compinit
+# autoload -Uz compinit && compiniteval "$(atuin init zsh)"
+
+# fzf is fuzzy search
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Created by `pipx` on 2023-02-01 07:29:31
+export PATH="$PATH:/Users/chrisadams/.local/bin"
+
+# add Postgres App
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin"
+
+# add Deno paths
+export PATH="$PATH:/Users/chrisadams/.deno/bin"
+
+# better ls tools
+alias ls=eza
+
+# alias minio for browsing remote storage
+alias mcli=mc
+
+# add convenience for mailhog
+alias mailhog=MailHog
+
+# Init Homebrew, which adds environment variables
+eval "$(brew shellenv)"
+
+# add completions for just, and other tools
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+autoload -U compinit
+compinit
+
+# try to use ipdb for debugging
+export PYTHONBREAKPOINT=ipdb.set_trace
+
+
+autoload -U bashcompinit
+bashcompinit
+
+# add starship prompt niceness
+eval "$(starship init zsh)"
+. "$HOME/.cargo/env"
